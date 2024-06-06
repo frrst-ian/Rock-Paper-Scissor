@@ -1,0 +1,6 @@
+function getComputerChoice () {
+    
+}
+
+
+console.log()
