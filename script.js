@@ -6,41 +6,76 @@ function getComputerChoice() {
     var index = Math.floor(Math.random() * computerChoice.length);
     return computerChoice[index];
 }
-function getHumanChoice() {
-    var humanChoice = prompt("Enter your choice: Rock/Paper/Scissor").toLowerCase();
-    if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissor") {
-        console.log("Invalid choice. Please enter Rock, Paper, or Scissor.");
-        return getHumanChoice(); // recursively call until valid input is provided
-    }
-    return humanChoice;
-}
 
-
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        var humanSelection = getHumanChoice();
+function playGame(humanChoice) {
+    if (humanScore < 5 && computerScore < 5) {
         var computerSelection = getComputerChoice();
-        console.log("You chose: " + humanSelection);
-        console.log("Computer chose: " + computerSelection);
-        playRound(humanSelection, computerSelection);
+        updateResult("You chose: " + humanChoice);
+        updateResult("Computer chose: " + computerSelection);
+        playRound(humanChoice, computerSelection);
+        updateResult(`The current score is:\nComputer: ${computerScore}\nYou: ${humanScore}`);
     }
-    console.log(`The final score is:\n Computer: ${computerScore}\n You: ${humanScore}`);
+
+    if (humanScore == 5) {
+        updateResult("You won the game! \nPls reload the page");
+    } else if (computerScore == 5) {
+        updateResult("Computer won! Better luck next time. :P\nPls reload the page");
+    }
 }
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
+        updateResult("It's a tie!");
     } else if (
         (humanChoice === "rock" && computerChoice === "scissor") ||
         (humanChoice === "scissor" && computerChoice === "paper") ||
         (humanChoice === "paper" && computerChoice === "rock")
     ) {
-        console.log("You win this round!");
+        updateResult("You win this round!");
         humanScore++;
     } else {
-        console.log("Computer wins this round!");
+        updateResult("Computer wins this round!");
         computerScore++;
     }
 }
 
-playGame();
+function updateResult(message) {
+    const div = document.createElement('div');
+    div.textContent = message;
+    div.setAttribute("style", "color: #b4c5db; background: #1d1c1a; text-align: center; margin: 5px;");
+    document.body.appendChild(div);
+}
+
+const rockBtn = document.createElement('button');
+rockBtn.textContent = "Rock";
+const paperBtn = document.createElement('button');
+paperBtn.textContent = "Paper";
+const scissorBtn = document.createElement('button');
+scissorBtn.textContent = "Scissor";
+
+rockBtn.addEventListener('click', () => {
+    const humanChoice = 'rock';
+    playGame(humanChoice);
+});
+
+paperBtn.addEventListener('click', () => {
+    const humanChoice = 'paper';
+    playGame(humanChoice);
+});
+
+scissorBtn.addEventListener('click', () => {
+    const humanChoice = 'scissor';
+    playGame(humanChoice);
+});
+
+const buttonContainer = document.createElement('div');
+buttonContainer.appendChild(rockBtn);
+buttonContainer.appendChild(paperBtn);
+buttonContainer.appendChild(scissorBtn);
+buttonContainer.setAttribute("style", "text-align: center; margin-top: 20px;");
+document.body.appendChild(buttonContainer);
+
+// Center align body content
+document.body.style.textAlign = "center";
+document.body.style.background = "#1d1c1a";
+document.body.style.color = "#b4c5db";
