@@ -42,7 +42,7 @@ function playRound(humanChoice, computerChoice) {
 function updateResult(message) {
     const div = document.createElement('div');
     div.textContent = message;
-    div.setAttribute("style", "color: #b4c5db; background: #1d1c1a; text-align: center; margin: 5px;");
+    div.setAttribute("style", "color: #white; background-color: #black; text-align: center; margin: 5px;");
     document.body.appendChild(div);
 }
 
@@ -77,5 +77,5 @@ document.body.appendChild(buttonContainer);
 
 // Center align body content
 document.body.style.textAlign = "center";
-document.body.style.background = "#1d1c1a";
-document.body.style.color = "#b4c5db";
+document.body.style.background = "#white";
+document.body.style.color = "#black";
